@@ -1,4 +1,4 @@
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../dataSource";
 import { Task } from "../models/Task";
 
 export class TaskRepository {
