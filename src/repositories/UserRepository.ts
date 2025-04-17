@@ -1,35 +1,37 @@
-import { AppDataSource } from "../data-source";
+import { AppDataSource } from "../dataSource";
 import { User } from "../models/User";
 
 export class UserRepository {
-  private repo = AppDataSource.getRepository(User);
+  private userRepository = AppDataSource.getRepository(User);
 
   async createUser(name: string, email: string, password: string, createdAt: Date) {
-    const user = new User(name, email, password, createdAt);
+    const user = new User(name, email, password, createdAt, []);
+    return await this.userRepository.save(user);
   }
 
-  async findUserByEmail(email: string) {
-    return await this.repo.findOne({ where: { email } });
+  async findAllUsers() {
+    return await this.userRepository.find({ relations: ["tasks"] });
   }
 
   async findUserById(id: number) {
-    return await this.repo.findOne({ where: { id }, relations: ["Tasks"] });
+    return await this.userRepository.findOne({ where: { id }, relations: ["tasks"] });
   }
 
-  async updateUser(id: number, fields: Partial<User>) {
+  async findUserByEmail(email: string) {
+    return await this.userRepository.findOne({ where: { email } });
+  }
+
+  async updateUser(id: number, fieldsToUpdate: Partial<User>) {
     const user = await this.findUserById(id);
     if (!user) return null;
-    Object.assign(user, fields);
-    return await this.repo.save(user);
+
+    Object.assign(user, fieldsToUpdate);
+    return await this.userRepository.save(user);
   }
 
   async deleteUser(id: number) {
     const user = await this.findUserById(id);
     if (!user) return null;
-    return await this.repo.remove(user);
-  }
-
-  async findAllUsers() {
-    return await this.repo.find({ relations: ["orders", "favoriteDishes"] });
+    return await this.userRepository.remove(user);
   }
 }
