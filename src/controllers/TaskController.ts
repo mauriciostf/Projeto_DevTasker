@@ -10,11 +10,19 @@ import { Task } from '../models/Task';
 import { User } from '../models/User';
 >>>>>>> 03931f6e7bc1463d7959e0ba3e898cc68ffc704c
 
+<<<<<<< HEAD
 // export class TaskController {
 //   // Criar nova tarefa
 //   static async create(req: Request, res: Response) {
 //     const { title, description, status, deliveryDate } = req.body;
 //     // const userId = req.userId;
+=======
+export class TaskController {
+  // Criar nova tarefa
+  static async create(req: Request, res: Response) {
+    const { title, description, status, deliveryDate } = req.body;
+    const userId = req.user.id;
+>>>>>>> 369ffe7a74b294095b86c098ffe7ceb39081e8e0
 
 //     try {
 //       const user = await AppDataSource.getRepository(User).findOneBy({ id: userId });
@@ -42,10 +50,17 @@ import { User } from '../models/User';
 //     }
 //   }
 
+<<<<<<< HEAD
 //   // Listar tarefas do usuário logado
 //   static async findMine(req: Request, res: Response) {
 //     try {
 //       const userId = req.userId;
+=======
+  // Listar tarefas do usuário logado
+  static async findMine(req: Request, res: Response) {
+    try {
+      const userId = req.user.id;
+>>>>>>> 369ffe7a74b294095b86c098ffe7ceb39081e8e0
 
 //       const tasks = await AppDataSource.getRepository(Task).find({
 //         where: { user: { id: userId } }
@@ -68,8 +83,13 @@ import { User } from '../models/User';
 
 //       if (!task) return res.status(404).json({ message: 'Tarefa não encontrada' });
 
+<<<<<<< HEAD
 //       if (task.user.id !== req.userId)
 //         return res.status(403).json({ message: 'Você não pode editar esta tarefa' });
+=======
+      if (task.user.id !== req.user.id)
+        return res.status(403).json({ message: 'Você não pode editar esta tarefa' });
+>>>>>>> 369ffe7a74b294095b86c098ffe7ceb39081e8e0
 
 //       task.title = title ?? task.title;
 //       task.description = description ?? task.description;
@@ -93,8 +113,13 @@ import { User } from '../models/User';
 
 //       if (!task) return res.status(404).json({ message: 'Tarefa não encontrada' });
 
+<<<<<<< HEAD
 //       if (task.user.id !== req.userId)
 //         return res.status(403).json({ message: 'Você não pode deletar esta tarefa' });
+=======
+      if (task.user.id !== req.user.id)
+        return res.status(403).json({ message: 'Você não pode deletar esta tarefa' });
+>>>>>>> 369ffe7a74b294095b86c098ffe7ceb39081e8e0
 
 //       await taskRepository.remove(task);
 //       return res.status(204).send();
