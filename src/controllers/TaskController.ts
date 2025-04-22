@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 // import { Request, Response } from 'express';
 // import { AppDataSource } from '../dataSource';
 // import { Task } from '../models/Task';
 // import { User } from '../models/User';
+=======
+import { Request, Response } from 'express';
+import { AppDataSource } from '../dataSource';
+import { Task } from '../models/Task';
+import { User } from '../models/User';
+>>>>>>> 03931f6e7bc1463d7959e0ba3e898cc68ffc704c
 
 // export class TaskController {
 //   // Criar nova tarefa
