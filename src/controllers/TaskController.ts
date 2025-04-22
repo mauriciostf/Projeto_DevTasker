@@ -7,7 +7,7 @@ export class TaskController {
   // Criar nova tarefa
   static async create(req: Request, res: Response) {
     const { title, description, status, deliveryDate } = req.body;
-    const userId = req.userId;
+    const userId = req.user.id;
 
     try {
       const user = await AppDataSource.getRepository(User).findOneBy({ id: userId });
@@ -38,7 +38,7 @@ export class TaskController {
   // Listar tarefas do usuário logado
   static async findMine(req: Request, res: Response) {
     try {
-      const userId = req.userId;
+      const userId = req.user.id;
 
       const tasks = await AppDataSource.getRepository(Task).find({
         where: { user: { id: userId } }
@@ -61,7 +61,7 @@ export class TaskController {
 
       if (!task) return res.status(404).json({ message: 'Tarefa não encontrada' });
 
-      if (task.user.id !== req.userId)
+      if (task.user.id !== req.user.id)
         return res.status(403).json({ message: 'Você não pode editar esta tarefa' });
 
       task.title = title ?? task.title;
@@ -86,7 +86,7 @@ export class TaskController {
 
       if (!task) return res.status(404).json({ message: 'Tarefa não encontrada' });
 
-      if (task.user.id !== req.userId)
+      if (task.user.id !== req.user.id)
         return res.status(403).json({ message: 'Você não pode deletar esta tarefa' });
 
       await taskRepository.remove(task);

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserRepository } from "../repository/UserRepository";
+import { UserRepository } from "../repositories/UserRepository";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../auth";
 
@@ -7,7 +7,7 @@ const repo = new UserRepository();
 
 export class UserController {
 
-  // 👤 Registro de novo usuário
+
   static async register(req: Request, res: Response) {
     try {
       const { name, email, password, createdAt} = req.body;
@@ -27,7 +27,7 @@ export class UserController {
     }
   }
 
-  // 🔐 Login
+  
   static async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
@@ -52,7 +52,7 @@ export class UserController {
     }
   }
 
-  // 📜 Buscar todos os usuários
+  
   static async getAll(req: Request, res: Response) {
     try {
       const users = await repo.findAllUsers();
@@ -64,7 +64,6 @@ export class UserController {
     }
   }
 
-  // 🔍 Buscar usuário por ID
   static async getById(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
@@ -81,7 +80,6 @@ export class UserController {
     }
   }
 
-  // ✏️ Atualizar usuário
   static async update(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
@@ -102,7 +100,6 @@ export class UserController {
     }
   }
 
-  // ❌ Deletar usuário
   static async delete(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
