@@ -1,18 +1,17 @@
 import express from "express";
 import UserRoutes from "./routes/UserRoutes"
 import TaskRoutes from "./routes/TaskRoutes"
-
+import cors from "cors";
+import { AppDataSource } from "./dataSource";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
-
-// Usar as rotas
 app.use("/api", UserRoutes);
-app.use("/api", TaskRoutes);
+app.use("/api", TaskRoutes)
 
-
-
-// Iniciar o servidor
-app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
+AppDataSource.initialize().then(() => {
+  app.listen(3306, () => console.log("Server is running on port 3306"));
+}).catch((error) => {
+  console.log("Erro ao conectar ao banco de dados!", error)
 });
