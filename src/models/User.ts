@@ -11,27 +11,24 @@ export class User {
     id!: number;
 
     @Column({ length: 100 })
-    name!: string;
+    name: string;
 
     @Column({ unique: true })
-    email!: string;
+    email: string;
 
     @Column()
-    password!: string;
+    password: string;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
-    createdAt: Date;
+    createdAt!: Date;
 
     @OneToMany(() => Task, task => task.user)
-    tasks: Task[];
+    tasks!: Task[];
 
-    constructor(name: string, email: string, password: string, createdAt: Date, tasks: []) {
+    constructor(name: string, email: string, password: string) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.createdAt = createdAt;
-        this.tasks = tasks
-
     }
 
     @BeforeInsert()
